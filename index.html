@@ -1,307 +1,255 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101114">
-  <meta name="description" content="The personal portfolio of Venus Fatunla — aspiring developer, AI enthusiast and technology learner.">
-  <title>Venus Fatunla | Personal Portfolio</title>
-  <style>
-    :root {
-      --bg: #101114; --surface: #191b20; --surface-2: #20232a;
-      --text: #f4f4f1; --muted: #a6a8b0; --line: #30333b;
-      --accent: #c7f36b; --accent-ink: #15180d; --purple: #b8a5ff;
-      --radius: 22px; --shadow: 0 22px 70px rgba(0,0,0,.28);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0; min-height: 100vh; color: var(--text);
-      background: radial-gradient(circle at 12% 8%, rgba(184,165,255,.13), transparent 28rem),
-                  radial-gradient(circle at 90% 85%, rgba(199,243,107,.09), transparent 26rem), var(--bg);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.6;
-    }
-    a { color: inherit; }
-    button { font: inherit; }
-    .shell { width: min(1040px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 54px; }
-    .topline { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:22px; }
-    .brand { font-weight:900; letter-spacing:.12em; font-size:.82rem; color:var(--muted); }
-    .brand span { color:var(--accent); }
-    .theme-toggle { border:1px solid var(--line); background:var(--surface); color:var(--text); border-radius:999px; padding:9px 14px; cursor:pointer; }
-    .portfolio-card { overflow:hidden; border:1px solid var(--line); border-radius:30px; background:rgba(25,27,32,.94); box-shadow:var(--shadow); }
-    .hero { display:grid; grid-template-columns: 1.2fr .8fr; gap:34px; align-items:center; padding: clamp(26px, 6vw, 62px); position:relative; }
-    .eyebrow { display:inline-flex; gap:9px; align-items:center; color:var(--accent); text-transform:uppercase; letter-spacing:.16em; font-size:.7rem; font-weight:850; }
-    .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 16px var(--accent); }
-    h1 { font-size:clamp(2.8rem, 7vw, 5.7rem); line-height:.96; letter-spacing:-.075em; margin:18px 0; }
-    h1 span { color:var(--accent); font-family:Georgia,serif; font-weight:400; font-style:italic; }
-    .intro { max-width:590px; color:var(--muted); font-size:1.04rem; }
-    .actions { display:flex; flex-wrap:wrap; gap:11px; margin-top:26px; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 17px; border-radius:999px; text-decoration:none; border:1px solid var(--line); color:var(--text); background:var(--surface-2); font-weight:750; font-size:.88rem; transition:transform .2s, border-color .2s; cursor:pointer; }
-    .btn:hover { transform:translateY(-2px); border-color:var(--accent); }
-    .btn.primary { background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
-    .visual { min-height:290px; display:grid; place-items:center; position:relative; }
-    .orbit { width:min(270px, 72vw); aspect-ratio:1; border-radius:46% 54% 58% 42%; display:grid; place-items:center; background:radial-gradient(circle at 32% 25%, #f4ffbd 0 4%, transparent 24%), linear-gradient(140deg, #c7f36b, #b8a5ff 58%, #edacd2); transform:rotate(-9deg); box-shadow:0 25px 80px rgba(184,165,255,.16), inset -20px -20px 50px rgba(20,20,30,.18); }
-    .orbit span { color:#17191d; font-family:Georgia,serif; font-size:7rem; letter-spacing:-.12em; transform:rotate(9deg); }
-    .orbit-label { position:absolute; bottom:8px; right:0; background:#292c33; border:1px solid #41444d; color:#e6e7e2; padding:9px 13px; border-radius:14px; font-size:.75rem; transform:rotate(3deg); }
-    .divider { height:1px; background:var(--line); }
-    .section { padding:30px clamp(24px, 5vw, 54px); }
-    .section-heading { display:flex; justify-content:space-between; align-items:end; gap:16px; margin-bottom:18px; }
-    .kicker { color:var(--purple); text-transform:uppercase; letter-spacing:.14em; font-size:.68rem; font-weight:850; }
-    h2 { margin:5px 0 0; font-size:clamp(1.45rem, 3vw, 2rem); letter-spacing:-.045em; }
-    .section-note { color:var(--muted); font-size:.83rem; max-width:350px; margin:0; }
-    .about-grid { display:grid; grid-template-columns:.72fr 1.28fr; gap:16px; }
-    .focus-box, .about-copy, .project, .skill-group, .contact-box { background:var(--surface-2); border:1px solid var(--line); border-radius:18px; padding:20px; }
-    .focus-box strong { display:block; font-size:1.15rem; line-height:1.3; margin-bottom:9px; }
-    .focus-box p, .about-copy p { color:var(--muted); margin:0; font-size:.91rem; }
-    .about-copy p + p { margin-top:11px; }
-    .projects { display:grid; grid-template-columns:repeat(2,1fr); gap:13px; }
-    .project-top { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:15px; }
-    .project-number { color:var(--accent); font-size:.72rem; font-weight:850; letter-spacing:.12em; }
-    .status { border:1px solid #454852; color:#c5c7ce; border-radius:99px; padding:4px 9px; font-size:.65rem; text-transform:uppercase; letter-spacing:.08em; }
-    .project h3 { margin:0 0 7px; font-size:1.1rem; }
-    .project p { margin:0; color:var(--muted); font-size:.86rem; }
-    .tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
-    .tag { border:1px solid #41444d; border-radius:99px; padding:5px 9px; color:#d7d8dd; font-size:.69rem; }
-    .skills { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-    .skill-group h3 { font-size:.88rem; margin:0 0 12px; color:var(--accent); }
-    .skill-group p { margin:0; color:var(--muted); font-size:.82rem; }
-
-    .cv-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
-    .cv-card { background:var(--surface-2); border:1px solid var(--line); border-radius:18px; padding:20px; }
-    .cv-card h3 { margin:0 0 6px; font-size:1rem; }
-    .cv-card .meta { color:var(--accent); font-size:.76rem; font-weight:800; margin:0 0 10px; }
-    .cv-card p, .cv-card li { color:var(--muted); font-size:.85rem; }
-    .cv-card p { margin:0; }
-    .cv-card ul { margin:9px 0 0; padding-left:18px; }
-    .cv-card li + li { margin-top:5px; }
-    @media (max-width:720px) { .cv-grid { grid-template-columns:1fr; } }
-
-    .contact { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
-    .contact-box h3 { margin:0 0 7px; }
-    .contact-box p { color:var(--muted); font-size:.84rem; margin:0 0 14px; }
-    .contact-links { display:flex; flex-wrap:wrap; gap:9px; }
-    .contact-links a, .contact-links button { font-size:.78rem; }
-    footer { padding:22px 30px 28px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; color:var(--muted); font-size:.75rem; }
-    .toast { position:fixed; left:50%; bottom:22px; transform:translate(-50%, 20px); opacity:0; pointer-events:none; background:var(--accent); color:var(--accent-ink); border-radius:99px; padding:10px 16px; font-size:.82rem; font-weight:800; transition:.25s; }
-    .toast.show { opacity:1; transform:translate(-50%,0); }
-    body.light { --bg:#f3f1eb; --surface:#fffefa; --surface-2:#f8f6ef; --text:#191b18; --muted:#62655e; --line:#dedbd1; --accent:#667c20; --accent-ink:#fff; --purple:#7558bd; --shadow:0 22px 70px rgba(30,30,20,.10); background:radial-gradient(circle at 12% 8%,rgba(184,165,255,.16),transparent 28rem),#f3f1eb; }
-    body.light .portfolio-card { background:rgba(255,254,250,.96); }
-    body.light .orbit-label { background:#fff; color:#252720; border-color:#dedbd1; }
-    body.light .tag { color:#42443e; border-color:#d8d5cb; }
-    body.light .status { color:#56594f; border-color:#d8d5cb; }
-    body.light .btn { color:var(--text); background:#fff; }
-    body.light .btn.primary { background:var(--accent); color:white; }
-    @media (max-width:720px) {
-      .shell { width:min(100% - 20px, 600px); padding-top:15px; }
-      .hero { grid-template-columns:1fr; gap:10px; padding-bottom:28px; }
-      .visual { min-height:220px; grid-row:1; }
-      .orbit { width:190px; }
-      .orbit span { font-size:5rem; }
-      .orbit-label { right:8%; bottom:0; }
-      .about-grid, .contact { grid-template-columns:1fr; }
-      .projects { grid-template-columns:1fr; }
-      .skills { grid-template-columns:1fr; }
-      .section-heading { display:block; }
-      .section-note { margin-top:8px; }
-      footer { padding-inline:24px; }
-    }
-    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10151d">
+<meta name="description" content="Venus Fatunla Oladepesoye — AI data operations, content research, front-end development and applied problem-solving.">
+<title>Venus Fatunla Oladepesoye | Portfolio</title>
+<style>
+:root{
+ --bg:#0d1219;--panel:#141d28;--panel2:#192433;--text:#f4f6f8;--muted:#aeb9c6;
+ --line:#2b3949;--lime:#c9ef78;--violet:#b9a8ff;--cyan:#83d7df;--gold:#f0c77b;
+ --shadow:0 24px 70px rgba(0,0,0,.28);--radius:22px
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:radial-gradient(circle at 5% 0%,rgba(185,168,255,.12),transparent 28rem),radial-gradient(circle at 95% 40%,rgba(131,215,223,.08),transparent 30rem),var(--bg);color:var(--text);font:16px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit}
+button{font:inherit}
+.wrap{width:min(1120px,calc(100% - 36px));margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(13,18,25,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(174,185,198,.13)}
+.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-size:.86rem;letter-spacing:.13em;font-weight:900;text-decoration:none;white-space:nowrap}
+.brand span{color:var(--lime)}
+.navlinks{display:flex;align-items:center;gap:20px}
+.navlinks a{font-size:.82rem;color:var(--muted);text-decoration:none}
+.navlinks a:hover{color:var(--lime)}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.smallbtn,.menu-btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:8px 12px;cursor:pointer}
+.menu-btn{display:none}
+main{padding:42px 0 70px}
+.hero{display:grid;grid-template-columns:1.4fr .6fr;gap:28px;align-items:center;padding:clamp(28px,6vw,68px);border:1px solid var(--line);border-radius:30px;background:linear-gradient(135deg,rgba(25,36,51,.96),rgba(20,29,40,.94));box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:340px;height:340px;border:1px solid rgba(201,239,120,.18);border-radius:50%;right:-150px;top:-180px;box-shadow:0 0 0 35px rgba(201,239,120,.025),0 0 0 75px rgba(185,168,255,.025);pointer-events:none}
+.eyebrow,.kicker{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:850;color:var(--lime)}
+.eyebrow{display:flex;align-items:center;gap:10px}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 15px var(--lime)}
+h1{font-size:clamp(2.8rem,7vw,5.8rem);letter-spacing:-.075em;line-height:.98;margin:18px 0 16px;max-width:780px}
+h1 span{color:var(--lime);font-family:Georgia,serif;font-weight:400;font-style:italic}
+.roleline{font-weight:750;color:#e0e7ed;font-size:clamp(.98rem,2vw,1.18rem);max-width:680px}
+.lead{max-width:690px;color:var(--muted);font-size:1.02rem;margin:16px 0 0}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--line);background:var(--panel2);padding:11px 16px;border-radius:999px;font-weight:800;font-size:.86rem;cursor:pointer;color:var(--text)}
+.btn.primary{background:var(--lime);border-color:var(--lime);color:#18200f}
+.btn:hover{transform:translateY(-2px);border-color:var(--lime)}
+.hero-mark{display:grid;place-items:center;min-height:240px;position:relative}
+.monogram{width:min(230px,60vw);aspect-ratio:1;border-radius:44% 56% 58% 42%;display:grid;place-items:center;transform:rotate(-8deg);background:linear-gradient(140deg,#d6f59a,#b9a8ff 60%,#83d7df);box-shadow:0 24px 70px rgba(185,168,255,.18),inset -18px -20px 45px rgba(10,15,22,.18)}
+.monogram b{font:7rem/1 Georgia,serif;color:#17202b;transform:rotate(8deg);letter-spacing:-.1em}
+.mark-note{position:absolute;bottom:5px;right:0;background:#202c3b;border:1px solid #394a5d;padding:8px 12px;border-radius:12px;color:#dce6ed;font-size:.74rem;transform:rotate(3deg)}
+.quickfacts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.fact{border:1px solid var(--line);border-radius:16px;background:rgba(20,29,40,.8);padding:15px 17px}
+.fact strong{display:block;font-size:.9rem}
+.fact span{display:block;color:var(--muted);font-size:.76rem;margin-top:3px}
+.sheet{margin-top:16px;border:1px solid var(--line);border-radius:28px;background:rgba(20,29,40,.94);overflow:hidden;box-shadow:var(--shadow)}
+section{padding:clamp(25px,4vw,42px) clamp(22px,5vw,54px);border-bottom:1px solid var(--line)}
+section:last-child{border-bottom:0}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:20px}
+h2{font-size:clamp(1.55rem,3vw,2.15rem);letter-spacing:-.05em;line-height:1.15;margin:6px 0 0}
+.sectionnote{color:var(--muted);font-size:.82rem;max-width:400px;margin:0}
+.aboutgrid{display:grid;grid-template-columns:.8fr 1.2fr;gap:14px}
+.panel,.card{border:1px solid var(--line);border-radius:18px;background:var(--panel2);padding:20px}
+.panel strong{font-size:1.12rem;line-height:1.3;display:block;margin-bottom:9px}
+.panel p,.card p{color:var(--muted);font-size:.9rem;margin:0}
+.panel p+p,.card p+p{margin-top:10px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pill{font-size:.73rem;border:1px solid #3a4a5d;color:#d8e1e9;border-radius:999px;padding:5px 9px;background:rgba(255,255,255,.025)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.card h3{font-size:1rem;line-height:1.35;margin:0 0 7px}
+.meta{font-size:.72rem!important;color:var(--cyan)!important;font-weight:850;letter-spacing:.04em;text-transform:uppercase;margin:0 0 9px!important}
+.card ul{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:.86rem}
+.card li+li{margin-top:5px}
+.card a{color:var(--lime);font-weight:750;text-decoration:none}
+.card a:hover{text-decoration:underline}
+.skillgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.skillcard{border:1px solid var(--line);border-radius:18px;background:var(--panel2);padding:20px}
+.skillcard h3{margin:0 0 8px;font-size:.98rem}
+.skillcard p{margin:0;color:var(--muted);font-size:.87rem}
+.skillcard .pills{margin-top:12px}
+.timeline{display:grid;gap:12px}
+.timelineitem{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--panel2)}
+.when{color:var(--gold);font-size:.76rem;font-weight:850}
+.timelineitem h3{margin:0 0 5px;font-size:.98rem}
+.timelineitem p{margin:0;color:var(--muted);font-size:.86rem}
+.certs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cert{border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--panel2)}
+.cert h3{font-size:.92rem;margin:0 0 5px}
+.cert p{font-size:.79rem;color:var(--muted);margin:0}
+.cert .date{color:var(--gold);font-size:.72rem;font-weight:800;margin-bottom:7px}
+.textlink{display:inline-block;margin-top:9px;font-size:.78rem;color:var(--lime);text-decoration:none;font-weight:800}
+.edu{display:grid;grid-template-columns:1.2fr .8fr;gap:13px}
+.contactgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.contactcard{border:1px solid var(--line);border-radius:18px;background:var(--panel2);padding:20px}
+.contactcard h3{margin:0 0 8px}
+.contactcard p{color:var(--muted);font-size:.88rem;margin:0}
+.contactlinks{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.contactlinks a,.contactlinks button{border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:var(--panel);color:var(--text);text-decoration:none;font-size:.78rem;font-weight:800;cursor:pointer}
+footer{padding:25px 0 0;text-align:center;color:var(--muted);font-size:.76rem}
+.tagline{color:var(--lime);font-weight:800}
+.note{color:var(--muted);font-size:.78rem}
+@media(max-width:820px){
+ .navlinks{display:none;position:absolute;top:71px;left:0;right:0;padding:16px 22px 20px;background:#111923;border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start}
+ .navlinks.open{display:flex}.menu-btn{display:inline-block}
+ .hero{grid-template-columns:1fr}.hero-mark{min-height:190px}.monogram{width:175px}.monogram b{font-size:5.5rem}
+ .quickfacts{grid-template-columns:1fr}.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+ .wrap{width:min(100% - 22px,1120px)}main{padding-top:20px}
+ .hero{padding:27px 22px;border-radius:23px}.hero-mark{display:none}
+ .aboutgrid,.grid2,.grid3,.skillgrid,.certs,.edu,.contactgrid{grid-template-columns:1fr}
+ .sectionhead{display:block}.sectionnote{margin-top:9px}
+ .timelineitem{grid-template-columns:1fr;gap:5px}
+ .nav{min-height:64px}.navlinks{top:63px}
+}
+@media print{
+ body{background:#fff;color:#17202b}.nav,.nav-actions,.ctas,footer{display:none!important}
+ .wrap{width:100%}main{padding:0}.hero,.sheet,.fact,.panel,.card,.skillcard,.timelineitem,.cert,.contactcard{background:#fff;color:#17202b;box-shadow:none;border-color:#ccd3dc}
+ .lead,.roleline,.panel p,.card p,.card ul,.skillcard p,.timelineitem p,.cert p,.contactcard p,.sectionnote,.note{color:#465363!important}
+ .sheet{break-inside:avoid}.hero{border-radius:0}
+ a{color:#17202b!important}
+}
+</style>
 </head>
 <body>
-  <div class="shell">
-    <div class="topline">
-      <div class="brand">VENUS<span>.</span> / PORTFOLIO</div>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch colour theme">☼ <span>Light mode</span></button>
-    </div>
-
-    <main class="portfolio-card">
-      <section class="hero" id="home">
-        <div>
-          <div class="eyebrow"><span class="dot"></span> Aspiring developer · AI learner</div>
-          <h1>Hi, I'm<br>Venus <span>Fatunla.</span></h1>
-          <p class="intro">I'm building my skills in technology through coding, experimentation and real projects. I'm especially interested in software development, artificial intelligence and cybersecurity — and in understanding how technology works beneath the surface.</p>
-          <div class="actions">
-            <a class="btn primary" href="#projects">Explore my projects ↘</a>
-            <a class="btn" href="#education">View my CV ↘</a>
-            <a class="btn" href="#contact">Let's connect ↗</a>
-          </div>
-        </div>
-        <div class="visual" aria-label="Decorative portfolio monogram">
-          <div class="orbit"><span>V.</span></div>
-          <div class="orbit-label">Curious mind. Constant learner.</div>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-      <section class="section" id="about">
-        <div class="section-heading">
-          <div><div class="kicker">01 / About me</div><h2>Learning. Building. Improving.</h2></div>
-          <p class="section-note">A quick introduction to who I am and what I'm working towards.</p>
-        </div>
-        <div class="about-grid">
-          <div class="focus-box"><strong>My current focus</strong><p>Becoming a stronger developer, exploring AI, and building practical projects that solve real problems.</p></div>
-          <div class="about-copy">
-            <p>I'm Venus Fatunla, a Medical Rehabilitation student at Obafemi Awolowo University, Nigeria, with a growing interest in the technology industry.</p>
-            <p>I'm developing my foundation in web technologies and expanding my understanding of programming, artificial intelligence and cybersecurity. I enjoy learning by doing, breaking problems down and turning ideas into working products.</p>
-            <p>Beyond technology, I enjoy creative writing and sharing ideas. It gives me another way to communicate, think and keep learning.</p>
-          </div>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-      <section class="section" id="education">
-        <div class="section-heading">
-          <div><div class="kicker">02 / Education</div><h2>Academic foundation.</h2></div>
-        </div>
-        <div class="cv-grid">
-          <article class="cv-card">
-            <h3>Obafemi Awolowo University</h3>
-            <p class="meta">Ile-Ife, Osun State, Nigeria · Current</p>
-            <p><strong>Bachelor's degree in Medical Rehabilitation</strong><br>Occupational Therapy programme</p>
-            <ul>
-              <li>Currently in Part Three of a five-year programme.</li>
-              <li>Building knowledge in rehabilitation, human function and client-centred care.</li>
-            </ul>
-          </article>
-          <article class="cv-card">
-            <h3>Academic interests</h3>
-            <p class="meta">Health · Technology · Human-centred design</p>
-            <p>Interested in the intersection of healthcare and technology, including accessible digital experiences and tools that respond to real human needs.</p>
-          </article>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-      <section class="section" id="experience">
-        <div class="section-heading">
-          <div><div class="kicker">03 / Experience & leadership</div><h2>Learning beyond the classroom.</h2></div>
-        </div>
-        <div class="cv-grid">
-          <article class="cv-card">
-            <h3>Student Leadership & Committee Volunteering</h3>
-            <p class="meta">University community · Student volunteer</p>
-            <ul>
-              <li>Contributed to student committees, including academic, social, freshers' and alumni activities.</li>
-              <li>Supported planning, communication and coordination of student-focused activities.</li>
-              <li>Served as a mentor to Part One students, offering peer support as they adjusted to university life.</li>
-            </ul>
-          </article>
-          <article class="cv-card">
-            <h3>Independent Technology Projects</h3>
-            <p class="meta">Self-directed learning · Ongoing</p>
-            <ul>
-              <li>Practising front-end development with HTML, CSS and JavaScript.</li>
-              <li>Developing project concepts and prototypes, including Bloomspace and Bloomspace Social.</li>
-              <li>Exploring software development, artificial intelligence and cybersecurity through independent learning.</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-      <section class="section" id="projects">
-        <div class="section-heading">
-          <div><div class="kicker">04 / Selected work</div><h2>Things I'm creating.</h2></div>
-          <p class="section-note">A mix of hands-on work and projects in development. More will be added as they grow.</p>
-        </div>
-        <div class="projects">
-          <article class="project">
-            <div class="project-top"><span class="project-number">PROJECT 01</span><span class="status">Prototype</span></div>
-            <h3>Bloomspace Social</h3>
-            <p>A frontend social community prototype designed around connecting people through schools, workplaces, interests and shared experiences.</p>
-            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">UI development</span></div>
-          </article>
-          <article class="project">
-            <div class="project-top"><span class="project-number">PROJECT 02</span><span class="status">In progress</span></div>
-            <h3>Bloomspace</h3>
-            <p>A product concept exploring a welcoming, personalised digital experience, with a character-led visual identity and step-by-step onboarding.</p>
-            <div class="tags"><span class="tag">Product thinking</span><span class="tag">UI/UX</span><span class="tag">Frontend</span></div>
-          </article>
-          <article class="project">
-            <div class="project-top"><span class="project-number">PROJECT 03</span><span class="status">Building</span></div>
-            <h3>Personal Portfolio</h3>
-            <p>This responsive portfolio card, built to present my interests, skills, projects and contact information in one place.</p>
-            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
-          </article>
-          <article class="project">
-            <div class="project-top"><span class="project-number">PROJECT 04</span><span class="status">Planned</span></div>
-            <h3>Opportunity Tracker</h3>
-            <p>A planned tool for organising internships, scholarships, courses, applications, deadlines and follow-up actions.</p>
-            <div class="tags"><span class="tag">JavaScript</span><span class="tag">Data</span><span class="tag">Product idea</span></div>
-          </article>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-      <section class="section" id="skills">
-        <div class="section-heading">
-          <div><div class="kicker">05 / Skills & interests</div><h2>My growing toolkit.</h2></div>
-
-        </div>
-        <div class="skills">
-          <div class="skill-group"><h3>Web development</h3><p>HTML · CSS · Responsive design · JavaScript (learning)</p></div>
-          <div class="skill-group"><h3>Technology interests</h3><p>Artificial intelligence · Cybersecurity · Software development · Problem-solving</p></div>
-          <div class="skill-group"><h3>Other strengths</h3><p>Creative writing · Communication · Research · Continuous learning</p></div>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-      <section class="section" id="contact">
-        <div class="section-heading">
-          <div><div class="kicker">06 / Contact</div><h2>Let's make a connection.</h2></div>
-          <p class="section-note">Open to learning opportunities, internships, collaborations and conversations about technology.</p>
-        </div>
-        <div class="contact">
-          <div class="contact-box">
-            <h3>Get in touch</h3>
-            <p>Reach out by email or connect with me professionally.</p>
-            <div class="contact-links">
-              <a class="btn primary" href="mailto:fatunlaoladepesoyevenus@gmail.com">Email me ↗</a>
-              <a class="btn" href="https://www.linkedin.com/in/fatunla-oladepesoye-venus-388833350/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-              <button class="btn" id="copyEmail" type="button">Copy email</button>
-            </div>
-          </div>
-          <div class="contact-box">
-            <h3>Outside the code</h3>
-            <p>I also write poems and personal reflections. You can find some of my writing on Substack.</p>
-            <div class="contact-links">
-              <a class="btn" href="https://substack.com/@veesigi" target="_blank" rel="noopener noreferrer">Read on Substack ↗</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <div class="divider"></div>
-      <footer><span>© <span id="year"></span> Venus Fatunla</span><span>Designed and built with HTML, CSS & JavaScript.</span></footer>
-    </main>
+<header>
+ <div class="wrap nav">
+  <a class="brand" href="#top">VENUS<span>.</span></a>
+  <nav class="navlinks" id="navlinks" aria-label="Main navigation">
+   <a href="#profile">Profile</a><a href="#experience">Experience</a><a href="#skills">Capabilities</a><a href="#projects">Projects</a><a href="#programmes">Programmes</a><a href="#certificates">Certificates</a><a href="#contact">Contact</a>
+  </nav>
+  <div class="nav-actions">
+   <button class="smallbtn" id="printBtn" type="button" aria-label="Print or save portfolio as PDF">Print / PDF</button>
+   <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
   </div>
-  <div class="toast" id="toast" role="status" aria-live="polite">Email copied!</div>
-  <script>
-    const themeToggle = document.getElementById('themeToggle');
-    const copyEmail = document.getElementById('copyEmail');
-    const toast = document.getElementById('toast');
-    const email = 'fatunlaoladepesoyevenus@gmail.com';
-
-    themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('light');
-      const isLight = document.body.classList.contains('light');
-      themeToggle.innerHTML = isLight ? '☾ <span>Dark mode</span>' : '☼ <span>Light mode</span>';
-      document.querySelector('meta[name="theme-color"]').content = isLight ? '#f3f1eb' : '#101114';
-    });
-
-    copyEmail.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(email);
-        toast.textContent = 'Email copied!';
-      } catch (error) {
-        toast.textContent = email;
-      }
-      toast.classList.add('show');
-      window.setTimeout(() => toast.classList.remove('show'), 2200);
-    });
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+ </div>
+</header>
+<main class="wrap" id="top">
+ <div class="hero">
+  <div>
+   <div class="eyebrow"><span class="pulse"></span> AI Data Operations · Front-End Development · Cybersecurity</div>
+   <h1>Venus Fatunla <span>Oladepesoye</span></h1>
+   <div class="roleline">Research-minded. Technology-focused. Driven to turn ideas into useful work.</div>
+   <p class="lead">I’m building practical capability across AI data work, front-end development and cybersecurity, supported by research, analytical thinking, communication and a human-centred perspective. I enjoy learning by doing: understanding a problem, finding the relevant information, testing an approach and improving the result.</p>
+   <div class="ctas">
+    <a class="btn primary" href="#projects">Explore my work ↘</a>
+    <a class="btn" href="#contact">Contact me ↗</a>
+    <button class="btn" type="button" id="printBtn2">Save / Print CV</button>
+   </div>
+  </div>
+  <div class="hero-mark" aria-label="Venus monogram"><div class="monogram"><b>V.</b></div><div class="mark-note">Curious mind · Practical learner</div></div>
+ </div>
+ <div class="quickfacts">
+  <div class="fact"><strong>AI & Data Operations</strong><span>Annotation, evaluation and research — developing practical experience</span></div>
+  <div class="fact"><strong>Front-End Development</strong><span>HTML · CSS · JavaScript · Responsive interfaces</span></div>
+  <div class="fact"><strong>Cybersecurity</strong><span>Developing knowledge · Digital safety · Security fundamentals</span></div>
+ </div>
+ <div class="sheet">
+  <section id="profile">
+   <div class="sectionhead"><div><div class="kicker">01 / Professional profile</div><h2>What I bring to the table.</h2></div><p class="sectionnote">A connected set of interests and strengths — not a collection of unrelated skills.</p></div>
+   <div class="aboutgrid">
+    <div class="panel"><strong>My working approach</strong><p>I approach unfamiliar tasks with curiosity, structure and a willingness to learn. I value clear communication, careful research, attention to detail and thoughtful problem-solving.</p><div class="pills"><span class="pill">Growth mindset</span><span class="pill">Initiative</span><span class="pill">Adaptability</span><span class="pill">Continuous learning</span></div></div>
+    <div class="panel"><strong>About me</strong><p>I’m Venus, a developing technology professional with interests in AI data operations, front-end development, cybersecurity and digital research. My experience includes content research with Techish Tales, student leadership and mentoring, academic research, and building independent digital projects.</p><p>My academic background in Medical Rehabilitation at Obafemi Awolowo University gives me an additional perspective on people, function and human-centred problem-solving. It informs my interests, but it is not the limit of my professional direction.</p><p>I’m interested in opportunities where I can contribute thoughtfully, learn quickly and turn information and ideas into practical outcomes.</p></div>
+   </div>
+  </section>
+  <section id="experience">
+   <div class="sectionhead"><div><div class="kicker">02 / Experience & contribution</div><h2>Work, service and applied learning.</h2></div><p class="sectionnote">Focused on what I have contributed and the capabilities those experiences demonstrate.</p></div>
+   <div class="grid2">
+    <article class="card">
+     <div class="meta">Content research</div><h3>Content Researcher · Techish Tales</h3>
+     <p>Contributes content research for Techish Tales, bringing together relevant information and context to support clear, useful technology-focused content.</p>
+     <div class="pills"><span class="pill">Content research</span><span class="pill">Information gathering</span><span class="pill">Technology topics</span><span class="pill">Contextual understanding</span></div>
+    </article>
+    <article class="card">
+     <div class="meta">Student leadership & service</div><h3>IFUTSA · Academic and Welfare Committee</h3>
+     <p>Served in the Academic and Welfare Committee and contributed to the academic growth of IFUTSITES. Received a Certificate of Appreciation in recognition of dedication and contributions.</p>
+     <div class="pills"><span class="pill">Student service</span><span class="pill">Communication</span><span class="pill">Team contribution</span></div>
+    </article>
+    <article class="card">
+     <div class="meta">Mentorship & community</div><h3>Peer Mentor · Part One Students</h3>
+     <p>Provided peer support to newer students as they adjusted to university life, drawing on communication, empathy and practical guidance.</p>
+     <div class="pills"><span class="pill">Peer mentoring</span><span class="pill">Empathy</span><span class="pill">Interpersonal communication</span></div>
+    </article>
+    <article class="card">
+     <div class="meta">Research & information review</div><h3>Academic Research and Information Review</h3>
+     <p>Uses academic materials and digital sources to gather information, identify relevant details, organise findings and communicate information in clear written formats.</p>
+     <div class="pills"><span class="pill">Desk research</span><span class="pill">Evidence gathering</span><span class="pill">Documentation</span><span class="pill">Attention to detail</span></div>
+    </article>
+   </div>
+  </section>
+  <section id="skills">
+   <div class="sectionhead"><div><div class="kicker">03 / Capabilities</div><h2>Skills I’m building and applying.</h2></div></div>
+   <div class="skillgrid">
+    <div class="skillcard"><h3>AI data operations & annotation</h3><p>Practical exposure to annotation and AI-related task workflows, with continued development in data quality and evaluation.</p><div class="pills"><span class="pill">AI data annotation</span><span class="pill">Data labelling</span><span class="pill">AI training & evaluation</span><span class="pill">Quality checking</span><span class="pill">Text / image tasks</span></div></div>
+    <div class="skillcard"><h3>Audio & video annotation</h3><p>Developing capability and seeking further practical opportunities in audio and video annotation workflows.</p><div class="pills"><span class="pill">Audio annotation · developing</span><span class="pill">Video annotation · developing</span><span class="pill">Transcription</span></div></div>
+    <div class="skillcard"><h3>Front-end development</h3><p>Building responsive web interfaces and interactive prototypes through independent projects and hands-on practice.</p><div class="pills"><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">JavaScript · developing</span><span class="pill">Responsive design</span></div></div>
+    <div class="skillcard"><h3>Cybersecurity & digital safety</h3><p>Developing knowledge of cybersecurity concepts and safer digital practices, with an interest in understanding how systems, information and users can be protected.</p><div class="pills"><span class="pill">Cybersecurity · learning</span><span class="pill">Security fundamentals · learning</span><span class="pill">Digital safety awareness</span><span class="pill">Privacy awareness</span></div></div>
+    <div class="skillcard"><h3>Research & analytical thinking</h3><p>Finding, reviewing and organising information; identifying relevant details; and approaching questions methodically.</p><div class="pills"><span class="pill">Digital research</span><span class="pill">Information review</span><span class="pill">Critical thinking</span><span class="pill">Evidence gathering</span><span class="pill">Problem-solving</span></div></div>
+    <div class="skillcard"><h3>Communication & collaboration</h3><p>Communicating ideas clearly, supporting peers and contributing to shared work with care and accountability.</p><div class="pills"><span class="pill">Written communication</span><span class="pill">Interpersonal communication</span><span class="pill">Teamwork</span><span class="pill">Peer mentoring</span></div></div>
+    <div class="skillcard"><h3>Leadership & professional effectiveness</h3><p>Applying learning around self-awareness, adaptability, growth and working constructively with people.</p><div class="pills"><span class="pill">Growth mindset</span><span class="pill">Emotional intelligence</span><span class="pill">Adaptive leadership</span><span class="pill">Stakeholder engagement</span><span class="pill">Initiative</span></div></div>
+   </div>
+  </section>
+  <section id="projects">
+   <div class="sectionhead"><div><div class="kicker">04 / Selected projects</div><h2>Ideas made tangible.</h2></div><p class="sectionnote">Independent projects that show product thinking, experimentation and a growing development practice.</p></div>
+   <div class="grid2">
+    <article class="card"><div class="meta">Frontend prototype · Built</div><h3>Bloomspace Social</h3><p>A social community frontend prototype exploring a shared feed, posts, likes, comments, follows, communities, search and profile interactions.</p><div class="pills"><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">JavaScript</span><span class="pill">Local storage</span><span class="pill">UI development</span></div></article>
+    <article class="card"><div class="meta">Product concept · In development</div><h3>Bloomspace</h3><p>A product concept exploring a welcoming, personalised digital experience, with a character-led visual direction and step-by-step onboarding.</p><div class="pills"><span class="pill">Product thinking</span><span class="pill">User experience</span><span class="pill">Onboarding</span><span class="pill">Digital design</span></div></article>
+    <article class="card"><div class="meta">Personal project · Built</div><h3>Personal Portfolio</h3><p>A responsive website designed to bring together professional identity, skills, projects, experience and ways to connect.</p><div class="pills"><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">JavaScript</span><span class="pill">Responsive design</span></div></article>
+    <article class="card"><div class="meta">Product idea · Planned</div><h3>Opportunity Tracker</h3><p>A planned tool for organising internships, scholarships, courses, applications, deadlines and follow-up actions in one place.</p><div class="pills"><span class="pill">Problem identification</span><span class="pill">Product idea</span><span class="pill">Organisation</span><span class="pill">Workflow thinking</span></div></article>
+   </div>
+  </section>
+  <section id="programmes">
+   <div class="sectionhead"><div><div class="kicker">05 / Programmes & development</div><h2>Learning beyond the classroom.</h2></div><p class="sectionnote">Leadership, entrepreneurship and professional development experiences shaping how I approach work.</p></div>
+   <div class="timeline">
+    <div class="timelineitem"><div class="when">2026 · 2026 cohort</div><div><h3>Aspire Leaders Program</h3><p>Participating in a leadership development programme focused on personal growth, leadership, entrepreneurship and turning ideas into impact. Learning themes include growth mindset, adaptive leadership, emotional intelligence, stakeholder engagement, and the relationship between AI, human creativity and decision-making.</p></div></div>
+    <div class="timelineitem"><div class="when">Accepted · 2026</div><div><h3>Make What Matters · Ashoka & World Studios</h3><p>Accepted into a programme for university students focused on ideas, creativity and social impact.</p></div></div>
+   </div>
+   <p class="note" style="margin:13px 2px 0">Programme participation and acceptance are listed separately from earned certificates. Additional programme details can be added when confirmed.</p>
+  </section>
+  <section id="certificates">
+   <div class="sectionhead"><div><div class="kicker">06 / Certificates & recognition</div><h2>Learning and contribution, recognised.</h2></div><p class="sectionnote">Certificates and formal recognition currently available.</p></div>
+   <div class="certs">
+    <article class="cert"><div class="date">11 October 2025</div><h3>Interpersonal Communication</h3><p>Certificate of Completion · atingi eLearning Platform</p></article>
+    <article class="cert"><div class="date">24 October 2024</div><h3>Accelerated Jobberman Soft Skills Training</h3><p>Completed and passed · Jobberman / The African Talent Company</p></article>
+    <article class="cert"><div class="date">25 October 2024</div><h3>Soft Skills for Career Success</h3><p>Certificate of Achievement · Jobberman / The African Talent Company</p><a class="textlink" href="https://www.jobberman.com/certificate/79b461ba-85b6-48ac-9fca-ac2be3ddd441" target="_blank" rel="noopener">Verify certificate ↗</a></article>
+    <article class="cert"><div class="date">2024/2025 session</div><h3>Certificate of Appreciation</h3><p>Academic and Welfare Committee · IFUTSA. Recognised for dedication and contributions to the academic growth of IFUTSITES.</p></article>
+   </div>
+  </section>
+  <section id="education">
+   <div class="sectionhead"><div><div class="kicker">07 / Education & perspective</div><h2>A human-centred foundation.</h2></div></div>
+   <div class="edu">
+    <article class="card"><div class="meta">Current student</div><h3>Obafemi Awolowo University (OAU) · Ile-Ife, Nigeria</h3><p>Bachelor’s degree programme in Medical Rehabilitation (Occupational Therapy).</p><p>Academic learning in rehabilitation, human function and client-centred care contributes a people-focused perspective to my interests in technology and problem-solving.</p></article>
+    <article class="card"><div class="meta">Languages</div><h3>Communication across contexts</h3><p><strong>English:</strong> Fluent<br><strong>Nigerian Pidgin:</strong> Fluent<br><strong>Yoruba (Ekiti dialect):</strong> Native tongue</p></article>
+   </div>
+  </section>
+  <section id="contact">
+   <div class="sectionhead"><div><div class="kicker">08 / Contact</div><h2>Let's connect.</h2></div><p class="sectionnote">Open to relevant opportunities, collaboration, research and technology-focused work.</p></div>
+   <div class="contactgrid">
+    <div class="contactcard"><h3>Start a conversation</h3><p>For professional opportunities, project conversations or collaboration, reach me through email or LinkedIn.</p><div class="contactlinks"><a href="mailto:fatunlaoladepesoyevenus@gmail.com">Email me ↗</a><a href="https://www.linkedin.com/in/fatunla-oladepesoye-venus-388833350/" target="_blank" rel="noopener">LinkedIn ↗</a></div></div>
+    <div class="contactcard"><h3>Explore my work</h3><p>Find my code, projects and writing through these links.</p><div class="contactlinks"><a href="https://substack.com/@veesigi" target="_blank" rel="noopener">Substack ↗</a></div></div>
+   </div>
+  </section>
+ </div>
+ <footer><div class="tagline">Curious mind. Thoughtful work. Continuous growth.</div><div>© <span id="year"></span> Venus Fatunla Oladepesoye</div></footer>
+</main>
+<script>
+const menuBtn=document.getElementById('menuBtn');
+const nav=document.getElementById('navlinks');
+menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open));});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');}));
+const print=()=>window.print();
+document.getElementById('printBtn').addEventListener('click',print);
+document.getElementById('printBtn2').addEventListener('click',print);
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
 </body>
 </html>
